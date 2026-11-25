@@ -5,6 +5,7 @@
 ## 独自の変更
 
 - 固定トークン認証付きの Cloudflare Workers エンドポイントを追加。Workers では MCP の通信セッションを作らず、MCP Apps の HTML をバンドルします。
+- ChatGPT の OAuth に対応。動的クライアント登録は ChatGPT のコールバックのみに限定し、PKCE と所有者キーによる承認を要求します。既存の固定トークン認証も維持します。ローカルで承認からトークン更新まで、本番で OAuth 発見情報と未認証リクエストの拒否を確認しました。今後の本番更新では OAuth KV を含むローカル設定を使います。
 - 検索結果は Durable Objects に保存し、`search_events` と `browse_events` が別リクエストでもつながります。保存から 10 分で取得期限切れとなり、アラームが削除を行います。
 - Workers から connpass API へは fetch を使用し、ファイルを使う発表情報キャッシュは無効です。Node.js の stdio / HTTP は存続します。
 - MCP SDK の要求する戻り値型に合わせ、ツールのエラー応答型を修正しました。
